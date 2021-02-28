@@ -15,7 +15,6 @@ import mdParser from '../components/edit/mdParser';
 import EditPage from './EditPage';
 import Loading from '../components/Loading';
 import Header from '../components/Header';
-import CodeBlock from '../components/article/CodeBlock';
 import * as actions from '../store/blog/actions';
 
 const dataFormatting = n => (n > 9 ? `${n}` : `0${n}`);
@@ -119,17 +118,16 @@ const ArticlePage = props => {
         articleIndex={props.blog.posts.findIndex(post => post._id === selectedArticleID)}
       />
       <div>
-        <div className="contentWrapper">
-          <div className="articleNavInner" style={{ width: '90%', color: 'white' }}>
-            <Link to="/">
-              <FiArrowLeft
-                style={{
-                  cursor: 'pointer', zIndex: 100, position: 'relative', fontSize: '30px', marginTop: '12px',
-                }}
-              />
-            </Link>
-            {
-              selectedArticle.username === props.user.username &&
+        <div className="article-header-stick" style={{ width: '90%', color: 'white' }}>
+          <Link to="/">
+            <FiArrowLeft
+              style={{
+                cursor: 'pointer', zIndex: 100, position: 'relative', fontSize: '30px', marginTop: '12px',
+              }}
+            />
+          </Link>
+          {
+            selectedArticle.username === props.user.username &&
               (
                 <>
                   <FiEdit
@@ -146,14 +144,13 @@ const ArticlePage = props => {
                   />
                 </>
               )
-            }
-          </div>
-          <div className="blogWrapper">
-            <div
-              className={`blog-body ${window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'markdown-body-dark' : 'markdown-body'}`}
-              dangerouslySetInnerHTML={{ __html: mdParser.render(selectedArticle.content) }}
-            />
-          </div>
+          }
+        </div>
+        <div className="blog-container">
+          <div
+            className={`blog-body ${window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'markdown-body-dark' : 'markdown-body'}`}
+            dangerouslySetInnerHTML={{ __html: mdParser.render(selectedArticle.content) }}
+          />
           <div className="replyBackground">
             <div className="replyWrapper">
               <div className="replyTag">Replies:</div>

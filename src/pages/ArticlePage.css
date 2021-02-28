@@ -1,0 +1,168 @@
+.blog-body, .headerWrapper, .replyWrapper {
+  position: center;
+  width: 100%;
+  max-width: var(--MAX_WIDTH);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.headerWrapper {
+  width: 90%;
+  display: block;
+  height: 60px;
+}
+
+.article-header-stick {
+  z-index: 1000;
+  margin: 0 auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  position: fixed;
+  width: 100%;
+  max-width: var(--MAX_WIDTH);
+}
+
+.articleIndexText {
+  font-size: 1rem;
+  margin-right: 1rem;
+  padding-top: 0.58rem;
+  vertical-align: center;
+}
+
+.article {
+  min-height: -webkit-fill-available;
+  overflow-x: hidden;
+}
+
+.blockWrapper.replyWrapper {
+  cursor: auto;
+  margin-top: 30px;
+}
+
+.blog-container {
+  background-color: white;
+}
+
+.blog-body {
+  background-color: white;
+  padding: 30px 0;
+  max-width: var(--MAX_WIDTH);
+}
+
+.form-group, .form-group-submit {
+  margin: 20px auto;
+  display: flex;
+  width: 90%;
+}
+
+.form-control { 
+  -webkit-user-select:text;
+  height: 40px;
+  background: #f2f2f2;
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  width: 100%;
+  border: 0;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.form-control:disabled {
+  cursor: not-allowed;
+}
+
+.form-group-submit {
+  width: 90%;
+}
+
+.form-group-submit > * {
+  margin-right: 20px;
+}
+
+.form-group > textarea{
+  background: white;
+}
+
+.submitButton {
+  -webkit-font-smoothing: antialiased;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  flex: 1;
+  position: relative;
+  display: inline-block;
+  padding: 12px 24px;
+  margin: auto;
+  width: 100%;
+  background-color: rgba(32, 35, 42, 1);
+  vertical-align: middle;
+  color: #fff;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: 1px;
+  border: 0;
+  cursor: pointer;
+}
+
+.replyBackground{
+  overflow-x: hidden;
+  width: 100vw;
+  margin: 0;
+  padding-bottom: 10px;
+  background-color: #f7f7f7;
+}
+.replyWrapper{
+  width: 90%;
+}
+
+.replyTag{
+  padding-top: 20px;
+  font-size: 14px;
+  font-weight: bold;
+  color: rgb(77, 77, 77);
+}
+
+.blog-container.blog {
+  min-height: calc(100vh - 400px);
+}
+
+@media screen and (prefers-color-scheme: dark) { /* dark mode style */
+  :root,.loginCard,.blog-container {
+    background: var(--darkBackground);
+  }
+
+  .replyBackground {
+    background-color: var(--darkBackground);
+  }
+
+  .form-control {
+    background-color: var(--darkContent);
+    color: #e4dfd9;
+  }
+
+  .header,.divider,.submitButton,.form-group > textarea{
+    background: var(--darkContent);
+  }
+
+}
+
+
+@media only screen and (max-width: 1360px) {
+  .article-header-stick{
+    padding-left: 5vw;
+    padding-right: 5vw;
+  }
+
+  .title {
+    font-size: 30px;
+  }
+
+  .blog-body {
+    width: 90vw;
+    padding: 20px 0;
+  }
+}

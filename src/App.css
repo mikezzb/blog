@@ -56,34 +56,14 @@ body {
   width: 100%;
 }
 
-.blog-body, .headerWrapper, .blockView,.replyWrapper {
+ .headerWrapper {
   position: center;
-  width: 100%;
   max-width: var(--MAX_WIDTH);
   margin-left: auto;
   margin-right: auto;
-}
-
-.blog-body {
-  padding: 30px 70px;
-}
-
-.headerWrapper {
   width: 90%;
   display: block;
   height: 60px;
-}
-
-.articleNavInner{
-  z-index: 1000;
-  margin: 0 auto;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  position: fixed;
-  width: 100%;
-  max-width: var(--MAX_WIDTH);
 }
 
 .articleNavBackground{
@@ -181,13 +161,6 @@ body {
   padding-bottom: 20px;
 }
 
-.articleIndexText {
-  font-size: 1rem;
-  margin-right: 1rem;
-  padding-top: 0.58rem;
-  vertical-align: center;
-}
-
 .author {
   display: flex;
   margin-bottom: 10px;
@@ -217,21 +190,6 @@ body {
   font-size: 3.2rem;
 }
 
-.article{
-  min-height: -webkit-fill-available;
-  overflow-x: hidden;
-}
-
-.blockWrapper.replyWrapper {
-  cursor: auto;
-  margin-top: 30px;
-}
-
-
-.blogWrapper{
-  background-color: white;
-}
-
 .loginWrapper {
   z-index: 2;
   position: absolute;
@@ -256,14 +214,6 @@ body {
   height: 60px;
   border-radius: 5px 5px 0 0;
   display: flex;
-}
-
-.rc-md-editor {
-  height: calc(100vh - 350px);
-  max-width: 1260px;
-  margin: auto;
-  width: 90%;
-  -webkit-user-select: text;
 }
 
 .form-group, .form-group-submit {
@@ -296,7 +246,6 @@ body {
 .form-group-submit > * {
   margin-right: 20px;
 }
-
 
 .crossIcon {
   font-size: 1.5rem;
@@ -347,14 +296,14 @@ body {
   margin: auto;
   display: flex;
   font-size: 12px;
-
-  > div {
-    color: rgba(32, 35, 42, 0.8);
-    margin-left: 6px;
-    cursor: pointer;
-  }
 }
 
+.switchLogin > div {
+  color: rgba(32, 35, 42, 0.8);
+  margin-left: 6px;
+  cursor: pointer;
+
+}
 .inputFormWrapper{
   border-left: 3px solid #c5d2d8;
   margin: 20px auto;
@@ -366,34 +315,8 @@ body {
   flex: 1;
 }
 
-.replyBackground{
-  overflow-x: hidden;
-  width: 100vw;
-  margin: 0;
-  padding-bottom: 10px;
-  background-color: #f7f7f7;
-}
-.replyWrapper{
-  width: 90%;
-}
-
-.replyTag{
-  padding-top: 20px;
-  font-size: 14px;
-  font-weight: bold;
-  color: rgb(77, 77, 77);
-}
-
-.form-group>textarea{
+.form-group > textarea{
   background: white;
-}
-
-.contentWrapper{
-  background: #f7f7f7;
-}
-
-.contentWrapper.blog {
-  min-height: calc(100vh - 400px);
 }
 
 .userMenuContainer{
@@ -488,22 +411,12 @@ body {
     margin-right: 5vw;
   }
 
-  .articleNavInner{
-    padding-left: 5vw;
-    padding-right: 5vw;
-  }
-
   .userMenuContainer{
     padding-left: 0;
   }
 
   .title{
     font-size: 30px;
-  }
-
-  .blog-body {
-    width: 90vw;
-    padding: 20px 0;
   }
 }
 
