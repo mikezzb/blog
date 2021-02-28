@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import * as Markdown from 'react-markdown';
-import PropTypes from 'prop-types';
+import React, { useState, useEffect, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { FiArrowLeft, FiEdit } from 'react-icons/fi';
 
-import { COMMENT_ADD, COMMENT_LOAD, COMMENT_DELETE, COMMENT_DELETE_ALL, BLOG_DELETE } from '../constants/apis';
+import {
+  COMMENT_ADD, COMMENT_LOAD, COMMENT_DELETE, COMMENT_DELETE_ALL, BLOG_DELETE
+} from '../constants/apis';
+import './ArticlePage.css';
+import '../components/article/github-markdown.css';
+import '../components/article/markdown-dark.css';
+import mdParser from '../components/edit/mdParser';
 import EditPage from './EditPage';
 import Loading from '../components/Loading';
 import Header from '../components/Header';
@@ -16,10 +20,6 @@ import * as actions from '../store/blog/actions';
 
 const dataFormatting = n => (n > 9 ? `${n}` : `0${n}`);
 const toDDMMMYYYY = date => (`${date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).replace(/ /g, ' ')} ${dataFormatting(date.getHours())}:${dataFormatting(date.getMinutes())}`);
-
-Markdown.propTypes = {
-  value: PropTypes.string.isRequired,
-};
 
 const Image = props => (<img {...props} style={{ maxWidth: '100%' }} />);
 
@@ -31,7 +31,6 @@ const ArticlePage = props => {
   const [editing, setEditing] = useState(false);
 
   const loadComments = () => {
-    // Load Comments
     axios.post(COMMENT_LOAD, { article_id: selectedArticleID })
       .then(res => setComments(res.data))
       .catch(error => {
@@ -150,9 +149,10 @@ const ArticlePage = props => {
             }
           </div>
           <div className="blogWrapper">
-            <div className="blog">
-              <Markdown escapeHtml={false} renderers={{ code: CodeBlock, image: Image }} source={selectedArticle.content} style={{ whiteSpace: 'initial' }} />
-            </div>
+            <div
+              className={`blog-body ${window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'markdown-body-dark' : 'markdown-body'}`}
+              dangerouslySetInnerHTML={{ __html: mdParser.render(selectedArticle.content) }}
+            />
           </div>
           <div className="replyBackground">
             <div className="replyWrapper">

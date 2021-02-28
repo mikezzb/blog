@@ -1,0 +1,241 @@
+/*
+Adopted from https://github.com/jasonm23/markdown-css-themes
+*/
+
+.markdown-body-dark.blog-body {
+  background: var(--darkBackground);
+  color: #eee;
+  line-height: 1;
+}
+.markdown-body-dark h1, .markdown-body-dark h2, .markdown-body-dark h3, .markdown-body-dark h4 {
+  font-weight: 400;
+}
+.markdown-body-dark h1, .markdown-body-dark h2, .markdown-body-dark h3, .markdown-body-dark h4, .markdown-body-dark h5, .markdown-body-dark p {
+  margin-bottom: 24px;
+  padding: 0;
+}
+.markdown-body-dark h1 {
+  font-size: 48px;
+}
+.markdown-body-dark h2 {
+  font-size: 36px;
+  margin: 24px 0 6px;
+}
+.markdown-body-dark h3 {
+  font-size: 24px;
+}
+.markdown-body-dark h4 {
+  font-size: 21px;
+}
+.markdown-body-dark h5 {
+  font-size: 18px;
+}
+.markdown-body-dark a {
+  color: #61bfc1;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  vertical-align: baseline;
+}
+.markdown-body-dark a:hover {
+  text-decoration: underline;
+}
+.markdown-body-dark a:visited {
+  color: #466b6c;
+}
+.markdown-body-dark ul, .markdown-body-dark ol {
+  padding: 0;
+  margin: 0;
+}
+.markdown-body-dark li {
+  line-height: 24px;
+}
+.markdown-body-dark li ul, .markdown-body-dark li ul {
+  margin-left: 24px;
+}
+.markdown-body-dark p, .markdown-body-dark ul, .markdown-body-dark ol {
+  font-size: 16px;
+  line-height: 24px;
+}
+.markdown-body-dark pre {
+  padding: 10px 24px;
+  margin-bottom: 24px;
+  max-width: 800px;
+  overflow: auto;
+}
+.markdown-body-dark code {
+  font-family: Consolas, Monaco, Andale Mono, monospace;
+  line-height: 1.5;
+  font-size: 13px;
+}
+.markdown-body-dark aside {
+  display: block;
+  float: right;
+  width: 390px;
+}
+.markdown-body-dark blockquote {
+  border-left: 0.5em solid #eee;
+  padding: 0 2em;
+  margin-left: 0;
+  max-width: 476px;
+}
+.markdown-body-dark blockquote cite {
+  font-size: 14px;
+  line-height: 20px;
+  color: #bfbfbf;
+}
+.markdown-body-dark blockquote cite:before {
+  content: '\2014 \00A0';
+}
+.markdown-body-dark blockquote p {
+  color: #666;
+  max-width: 460px;
+}
+.markdown-body-dark hr {
+  width: 540px;
+  text-align: left;
+  margin: 0 auto 0 0;
+  color: #999;
+}
+.markdown-body-dark button, .markdown-body-dark input, .markdown-body-dark select, .markdown-body-dark textarea {
+  font-size: 100%;
+  margin: 0;
+  vertical-align: baseline;
+  *vertical-align: middle;
+}
+.markdown-body-dark button, .markdown-body-dark input {
+  line-height: normal;
+  *overflow: visible;
+}
+.markdown-body-dark button::-moz-focus-inner, .markdown-body-dark input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+.markdown-body-dark button, .markdown-body-dark input[type="button"], .markdown-body-dark input[type="reset"], .markdown-body-dark input[type="submit"] {
+  cursor: pointer;
+  -webkit-appearance: button;
+}
+.markdown-body-dark input[type=checkbox], .markdown-body-dark input[type=radio] {
+  cursor: pointer;
+}
+.markdown-body-dark input:not([type="image"]), .markdown-body-dark textarea {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+.markdown-body-dark input[type="search"] {
+  -webkit-appearance: textfield;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+.markdown-body-dark input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+.markdown-body-dark label, .markdown-body-dark input, .markdown-body-dark select, .markdown-body-dark textarea {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: normal;
+  margin-bottom: 18px;
+}
+.markdown-body-dark input[type=checkbox], .markdown-body-dark input[type=radio] {
+  cursor: pointer;
+  margin-bottom: 0;
+}
+.markdown-body-dark input[type=text], .markdown-body-dark input[type=password], .markdown-body-dark textarea, .markdown-body-dark select {
+  display: inline-block;
+  width: 210px;
+  padding: 4px;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 18px;
+  height: 18px;
+  color: #808080;
+  border: 1px solid #ccc;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.markdown-body-dark select, .markdown-body-dark input[type=file] {
+  height: 27px;
+  line-height: 27px;
+}
+.markdown-body-dark textarea {
+  height: auto;
+}
+.markdown-body-dark :-moz-placeholder {
+  color: #bfbfbf;
+}
+.markdown-body-dark ::-webkit-input-placeholder {
+  color: #bfbfbf;
+}
+.markdown-body-dark input[type=text], .markdown-body-dark input[type=password], .markdown-body-dark select, .markdown-body-dark textarea {
+  -webkit-transition: border linear 0.2s, box-shadow linear 0.2s;
+  -moz-transition: border linear 0.2s, box-shadow linear 0.2s;
+  transition: border linear 0.2s, box-shadow linear 0.2s;
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.markdown-body-dark input[type=text]:focus, .markdown-body-dark input[type=password]:focus, .markdown-body-dark textarea:focus {
+  outline: none;
+  border-color: rgba(82, 168, 236, 0.8);
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+  -moz-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 8px rgba(82, 168, 236, 0.6);
+}
+.markdown-body-dark button {
+  display: inline-block;
+  padding: 4px 14px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  background-color: #0064cd;
+  background-repeat: repeat-x;
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#049cdb), to(#0064cd));
+  background-image: -moz-linear-gradient(top, #049cdb, #0064cd);
+  background-image: -ms-linear-gradient(top, #049cdb, #0064cd);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #049cdb), color-stop(100%, #0064cd));
+  background-image: -webkit-linear-gradient(top, #049cdb, #0064cd);
+  background-image: -o-linear-gradient(top, #049cdb, #0064cd);
+  background-image: linear-gradient(top, #049cdb, #0064cd);
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  border: 1px solid #004b9a;
+  border-bottom-color: #003f81;
+  -webkit-transition: 0.1s linear all;
+  -moz-transition: 0.1s linear all;
+  transition: 0.1s linear all;
+  border-color: #0064cd #0064cd #003f81;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+}
+.markdown-body-dark button:hover {
+  color: #fff;
+  background-position: 0 -15px;
+  text-decoration: none;
+}
+.markdown-body-dark button:active {
+  -webkit-box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 3px 7px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.markdown-body-dark button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+.markdown-body-dark img {
+  max-width: 1260px;
+  max-height: 60vh;
+  width: 90vw;
+  height: auto;
+  -o-object-fit: contain;
+  object-fit: contain;
+  object-position: 0 0;
+}

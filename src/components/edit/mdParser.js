@@ -1,6 +1,3 @@
-import React, {
-  useState, useRef, useEffect, useReducer
-} from 'react';
 import MarkdownIt from 'markdown-it';
 import emoji from 'markdown-it-emoji';
 import subscript from 'markdown-it-sub';
@@ -23,7 +20,9 @@ const mdParser = new MarkdownIt({
       try {
         return hljs.highlight(lang, str).value;
       }
-      catch (__) {}
+      catch (e) {
+        console.log(e);
+      }
     }
     return '';
   },

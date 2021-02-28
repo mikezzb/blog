@@ -1,7 +1,7 @@
 
 * {
     margin: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
     -webkit-touch-callout: none;
 }
 
@@ -56,12 +56,16 @@ body {
   width: 100%;
 }
 
-.blog, .headerWrapper, .blockView,.replyWrapper {
+.blog-body, .headerWrapper, .blockView,.replyWrapper {
   position: center;
   width: 100%;
   max-width: var(--MAX_WIDTH);
   margin-left: auto;
   margin-right: auto;
+}
+
+.blog-body {
+  padding: 30px 70px;
 }
 
 .headerWrapper {
@@ -187,10 +191,10 @@ body {
 .author {
   display: flex;
   margin-bottom: 10px;
+}
 
-  > * {
-    margin: 5px;
-  }
+.author > * {
+  margin: 5px;
 }
 
 .authorName {
@@ -216,38 +220,6 @@ body {
 .article{
   min-height: -webkit-fill-available;
   overflow-x: hidden;
-}
-
-.blog {
-  width: 90vw;
-  max-width: 1260px;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  font-size: 18px;
-  color: #333;
-
-  > * {
-    margin: 20px 0;
-  }
-
-  > blockquote{
-    margin: 16px 0;
-    border-left: 10px solid #d6dbdf;  
-    background-color: rgba(102,128,153,.05);
-    font-size: 1.2em;
-    font-family: 'Roboto', sans-serif;
-    padding: 13px 8px 13px 30px;
-  }
-
-  > pre{
-    font-size: 16px;
-    padding: 20px !important;
-  }
-
-  >img{
-    max-width: 1260px;
-    width: 90vw;
-  }
 }
 
 .blockWrapper.replyWrapper {
@@ -461,19 +433,13 @@ body {
     background: var(--darkBackground);
   }
 
-  .app,.replyBackground{
+  .app,.replyBackground,.blogWrapper{
     background-color: var(--darkBackground);
   }
 
   .form-control {
     background-color: var(--darkContent);
     color: #e4dfd9;
-  }
-
-  .blog > blockquote{
-    background: rgba(51, 51, 51, 0.5);
-    color: var(--darkFontColor);
-    border-left: 5px var(--darkFontColor) solid;
   }
 
   .switchLogin{
@@ -488,7 +454,7 @@ body {
     background: var(--darkContent);
   }
 
-  .blog,.replyTag{
+  .replyTag{
     color: var(--darkFontColor);
   }
 
@@ -533,6 +499,11 @@ body {
 
   .title{
     font-size: 30px;
+  }
+
+  .blog-body {
+    width: 90vw;
+    padding: 20px 0;
   }
 }
 
