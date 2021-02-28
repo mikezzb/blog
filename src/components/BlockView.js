@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import {
+  AiFillLinkedin, AiFillGithub, AiFillCode, AiFillRead
+} from 'react-icons/ai';
+
 import Block from './Block';
 import HeaderView from './HeaderView';
 import Ring from './Ring';
@@ -91,33 +95,54 @@ const BlockView = props => {
         {
           props.blog.loading ?
             <Ring /> :
-            props.blog.posts
-              .filter(post =>
-                category === post.category || category === -1 || (category === -2 && props.user.user.username === post.username)
-              )
-              .map(post => (
-                <Link
-                  key={post._id}
-                  className="blockWrapper"
-                  to={{
-                    pathname: `/article/${post._id}`,
-                    index: props.blog.posts.findIndex(postItem => postItem.createdAt === post.createdAt),
-                  }}
-                >
-                  <Block
-                    category={post.category}
-                    tag={post.tags}
-                    date={post.createdAt}
-                    icon={post.userIcon}
-                    username={post.username}
-                    key={post.createdAt}
-                    content={post.content}
-                    background={post.backgroundURL}
-                    articleIndex={props.blog.posts.findIndex(postItem => postItem.createdAt === post.createdAt)}
-                    title={post.title}
-                  />
-                </Link>
-              ))
+            <>
+              <div className="left blocks">
+                {
+                  props.blog.posts
+                    .filter(post =>
+                      category === post.category || category === -1 || (category === -2 && props.user.user.username === post.username)
+                    )
+                    .map(post => (
+                      <Link
+                        key={post._id}
+                        className="blockWrapper"
+                        to={{
+                          pathname: `/article/${post._id}`,
+                          index: props.blog.posts.findIndex(postItem => postItem.createdAt === post.createdAt),
+                        }}
+                      >
+                        <Block
+                          category={post.category}
+                          tag={post.tags}
+                          date={post.createdAt}
+                          icon={post.userIcon}
+                          username={post.username}
+                          key={post.createdAt}
+                          content={post.content}
+                          background={post.backgroundURL}
+                          articleIndex={props.blog.posts.findIndex(postItem => postItem.createdAt === post.createdAt)}
+                          title={post.title}
+                        />
+                      </Link>
+                    ))
+                }
+              </div>
+              <div className="right about">
+                <div className="center top">
+                  <span className="my-icon" onClick={() => window.open('https://mikezzb.github.io/')} />
+                  <div className="about text">
+                    <h3>Mike</h3>
+                    <p>Yet another human being</p>
+                  </div>
+                </div>
+                <div className="bottom">
+                  <div>
+                    <AiFillGithub className="social-media" onClick={() => window.open('https://github.com/mikezzb')} />
+                    <AiFillLinkedin className="social-media" onClick={() => window.open('https://www.linkedin.com/in/mikezzb')} />
+                  </div>
+                </div>
+              </div>
+            </>
         }
       </div>
       {

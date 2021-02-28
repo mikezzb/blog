@@ -22,6 +22,7 @@ module.exports = {
   },
   plugins: [
     'react',
+    // 'only-warn', // for run build
   ],
   rules: {
     'indent': ['error', 2, { SwitchCase: 1 }],

@@ -10,6 +10,12 @@ export default function Block({
   const hasCover = (background !== '0' && background !== '');
   return (
     <>
+      <span>
+        <Author tag={tag} icon={icon}>{username}</Author>
+        <div className="blockTitle">{title}</div>
+        <div className="blockContent">{content.split(/\n/).map((p, i) => i < 4 && p !== '' && `${p.replace(/#|\*|!\[\]|>|^\s*\n/gm, '').replace(/^\s/m, '')}\n`)}</div>
+        <span>{toDDMMMYYYY(new Date(date))}</span>
+      </span>
       <div
         key={`${date}-${title}`}
         className={`blockCover${hasCover ? '' : ' noImage'}`}
@@ -19,12 +25,6 @@ export default function Block({
             { background: getGradient(category) }
         }
       />
-      <span>
-        <Author tag={tag} icon={icon}>{username}</Author>
-        <div className="blockTitle">{title}</div>
-        <div className="blockContent">{content.split(/\n/).map((p, i) => i < 4 && p !== '' && `${p.replace(/#|\*|!\[\]|>|^\s*\n/gm, '').replace(/^\s/m, '')}\n`)}</div>
-        <span>{toDDMMMYYYY(new Date(date))}</span>
-      </span>
     </>
   );
 }
