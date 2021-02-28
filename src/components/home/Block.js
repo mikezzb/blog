@@ -1,6 +1,6 @@
 import React from 'react';
-import Author from './Author';
-import getGradient from '../functions/getGradient';
+import Author from '../Author';
+import getGradient from '../../functions/getGradient';
 
 const toDDMMMYYYY = date => (date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).replace(/ /g, ' '));
 

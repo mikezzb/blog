@@ -2,6 +2,8 @@ import React, { useState, useReducer } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import Cookies from 'js-cookie';
+
+import { USER_LOGIN, USER_CREATE } from '../constants/apis';
 import * as actions from '../store/user/actions';
 
 const ERRORS = Object.freeze({
@@ -9,7 +11,7 @@ const ERRORS = Object.freeze({
   USER_DNE: 1,
 });
 
-const LoginView = ({ displayLogin, handler }) => {
+const Login = ({ displayLogin, handler }) => {
   const [isLogin, setIsLogin] = useState(false);
 
   const [form, dispatchForm] = useReducer(
@@ -24,8 +26,6 @@ const LoginView = ({ displayLogin, handler }) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    const switchRoute = isLogin ? 'login' : 'add';
-    const url = `users/${switchRoute}`;
     let user;
     if (isLogin) {
       user = {
@@ -44,7 +44,7 @@ const LoginView = ({ displayLogin, handler }) => {
 
     let serverResponse;
 
-    axios.post(url, user)
+    axios.post(isLogin ? USER_LOGIN : USER_CREATE, user)
       .then(res => {
         serverResponse = res.data;
         if (isLogin) {
@@ -160,4 +160,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(null, mapDispatchToProps)(LoginView);
+export default connect(null, mapDispatchToProps)(Login);

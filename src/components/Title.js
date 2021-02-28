@@ -1,7 +1,7 @@
 import React from 'react';
 import Author from './Author';
 
-export default function TitleView({
+export default function Title({
   icon, isArticle, tag, date, username, children,
 }) {
   return (

@@ -6,9 +6,11 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
-import ArticleView from './components/ArticleView';
-import BlockView from './components/BlockView';
-import EditorView from './components/EditorView';
+import {
+  ArticlePage,
+  EditPage,
+  HomePage
+} from './pages';
 import * as actions from './store/user/actions';
 
 const App = props => (
@@ -16,15 +18,15 @@ const App = props => (
     <Router>
       <Switch>
         <Route exact path="/">
-          <BlockView
+          <HomePage
             {...props}
           />
         </Route>
         <Route exact path="/article/:id">
-          <ArticleView {...props} />
+          <ArticlePage {...props} />
         </Route>
         <Route exact path="/edit">
-          <EditorView {...props} />
+          <EditPage {...props} />
         </Route>
       </Switch>
     </Router>

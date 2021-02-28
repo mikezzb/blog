@@ -4,27 +4,27 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import {
-  AiFillLinkedin, AiFillGithub, AiFillCode, AiFillRead
+  AiFillLinkedin, AiFillGithub
 } from 'react-icons/ai';
 
-import Block from './Block';
-import HeaderView from './HeaderView';
-import Ring from './Ring';
+import { BLOG_LOAD } from '../constants/apis';
+import './HomePage.css';
+import Block from '../components/home/Block';
+import Header from '../components/Header';
+import Loading from '../components/Loading';
 import * as actions from '../store/blog/actions';
 
-const BlockView = props => {
+const HomePage = props => {
   const [ended, setEnded] = useState(false);
   const [displayUserIconMenu, setDisplayUserIconMenu] = useState(false);
   const [category, setCategory] = useState(-1);
 
   const loadMore = () => {
-    const url = 'blogs/';
-
     const skipJSON = {
       dateBefore: props.blog.posts[props.blog.posts.length - 1].createdAt,
     };
 
-    axios.post(url, skipJSON)
+    axios.post(BLOG_LOAD, skipJSON)
       .then(res => {
         if (res.data && res.data.length) {
           // console.warn("server return: "+res.data);
@@ -85,7 +85,7 @@ const BlockView = props => {
           </div>
         </div>
       }
-      <HeaderView
+      <Header
         cookies={props.cookies}
         updateCategory={setCategory}
         isArticleView={false}
@@ -94,7 +94,7 @@ const BlockView = props => {
       <div className="blockView">
         {
           props.blog.loading ?
-            <Ring /> :
+            <Loading /> :
             <>
               <div className="left blocks">
                 {
@@ -176,4 +176,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(BlockView);
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

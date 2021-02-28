@@ -4,13 +4,13 @@ import { slide as Menu } from 'react-burger-menu';
 import { connect } from 'react-redux';
 import Cookies from 'js-cookie';
 import * as actions from '../store/user/actions';
-import LoginView from './LoginView';
-import TitleView from './TitleView';
+import LoginView from './Login';
+import TitleView from './Title';
 import getGradient from '../functions/getGradient';
 
 const navTags = ['All', 'Playground', 'Learning', 'ACG', 'Time Machine'];
 
-const HeaderView = (props, { isArticleView }) => {
+const Header = (props, { isArticleView }) => {
   const [displayLogin, setDisplayLogin] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -140,4 +140,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderView);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -6,10 +6,12 @@ import { Link, useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { FiArrowLeft, FiEdit } from 'react-icons/fi';
-import EditorView from './EditorView';
-import Ring from './Ring';
-import HeaderView from './HeaderView';
-import CodeBlock from './CodeBlock';
+
+import { COMMENT_ADD, COMMENT_LOAD, COMMENT_DELETE, COMMENT_DELETE_ALL, BLOG_DELETE } from '../constants/apis';
+import EditPage from './EditPage';
+import Loading from '../components/Loading';
+import Header from '../components/Header';
+import CodeBlock from '../components/article/CodeBlock';
 import * as actions from '../store/blog/actions';
 
 const dataFormatting = n => (n > 9 ? `${n}` : `0${n}`);
@@ -21,7 +23,7 @@ Markdown.propTypes = {
 
 const Image = props => (<img {...props} style={{ maxWidth: '100%' }} />);
 
-const ArticleView = props => {
+const ArticlePage = props => {
   const history = useHistory();
   const selectedArticleID = useParams().id;
   const [comments, setComments] = useState([]);
@@ -30,9 +32,7 @@ const ArticleView = props => {
 
   const loadComments = () => {
     // Load Comments
-    const url = 'comments/';
-
-    axios.post(url, { article_id: selectedArticleID })
+    axios.post(COMMENT_LOAD, { article_id: selectedArticleID })
       .then(res => setComments(res.data))
       .catch(error => {
         alert(error);
@@ -47,8 +47,6 @@ const ArticleView = props => {
   const onSubmit = e => {
     e.preventDefault(); // to prevent auto refresh due to form submit
 
-    const url = 'comments/add';
-
     const comment = {
       content: commentInput,
       username: props.user.username,
@@ -56,7 +54,7 @@ const ArticleView = props => {
       article_id: selectedArticleID,
     };
 
-    axios.post(url, comment)
+    axios.post(COMMENT_ADD, comment)
       .then(() => {
         setCommentInput('');
         loadComments();
@@ -67,8 +65,7 @@ const ArticleView = props => {
   };
 
   const deletePost = () => {
-    const url = 'blogs/delete';
-    axios.post(url, { article_id: selectedArticleID })
+    axios.post(BLOG_DELETE, { article_id: selectedArticleID })
       .then(res => {
         if (res.data) {
           history.push('/');
@@ -82,8 +79,7 @@ const ArticleView = props => {
         alert(error);
       });
 
-    const urlComment = 'comments/deleteAll';
-    axios.post(urlComment, { article_id: selectedArticleID })// to delete all associated comments
+    axios.post(COMMENT_DELETE_ALL, { article_id: selectedArticleID })// to delete all associated comments
       .then(() => {})
       .catch(error => {
         console.warn(error);
@@ -91,9 +87,7 @@ const ArticleView = props => {
   };
 
   const deleteComment = id => {
-    const url = 'comments/delete';
-
-    axios.post(url, { comment_id: id })
+    axios.post(COMMENT_DELETE, { comment_id: id })
       .then(res => {
         if (res.data === true) {
           loadComments();
@@ -110,15 +104,15 @@ const ArticleView = props => {
   const selectedArticle = props.blog.posts.find(post => post._id === selectedArticleID);
   if (editing) {
     return (
-      <EditorView goBack={() => setEditing(false)} selectedArticle={selectedArticle} />
+      <EditPage goBack={() => setEditing(false)} selectedArticle={selectedArticle} />
     );
   }
   if (props.blog.loading) {
-    return (<Ring />);
+    return (<Loading />);
   }
   return (
     <div className="article">
-      <HeaderView
+      <Header
         updateCategory={props.updateCategory}
         goBack={props.goBack}
         isArticleView
@@ -232,4 +226,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ArticleView);
+export default connect(mapStateToProps, mapDispatchToProps)(ArticlePage);

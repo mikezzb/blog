@@ -39,16 +39,16 @@ const RingSpinner = styled.div`
   }
 `;
 
-const Ring = ({ color, size, sizeUnit }) => (
+const Loading = ({ color, size, sizeUnit }) => (
   <Wrapper>
     <RingSpinner color={color} size={size} sizeUnit={sizeUnit} />
   </Wrapper>
 );
 
-Ring.defaultProps = {
+Loading.defaultProps = {
   size: 50,
   color: '#009cd8',
   sizeUnit: 'px',
 };
 
-export default Ring;
+export default Loading;

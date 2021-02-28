@@ -3,52 +3,20 @@ import React, {
 } from 'react';
 import { useHistory } from 'react-router-dom';
 import MdEditor from 'react-markdown-editor-lite';
-import MarkdownIt from 'markdown-it';
-import emoji from 'markdown-it-emoji';
-import subscript from 'markdown-it-sub';
-import superscript from 'markdown-it-sup';
-import footnote from 'markdown-it-footnote';
-import deflist from 'markdown-it-deflist';
-import abbreviation from 'markdown-it-abbr';
-import insert from 'markdown-it-ins';
-import mark from 'markdown-it-mark';
-import tasklists from 'markdown-it-task-lists';
-import hljs from 'highlight.js';
-import 'highlight.js/styles/atom-one-light.css';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 // import 'highlight.js/styles/github.css'
 import 'react-markdown-editor-lite/lib/index.css';
 import { connect } from 'react-redux';
 import { FiArrowLeft } from 'react-icons/fi';
+
+import { BLOG_CREATE, BLOG_UPDATE } from '../constants/apis';
+import mdParser from '../components/edit/mdParser';
 import * as actions from '../store/blog/actions';
 
-const EditorView = props => {
+const EditPage = props => {
   const history = useHistory();
   const mdEditor = useRef({});
-  const mdParser = new MarkdownIt({
-    html: true,
-    linkify: true,
-    typographer: true,
-    highlight(str, lang) {
-      if (lang && hljs.getLanguage(lang)) {
-        try {
-          return hljs.highlight(lang, str).value;
-        }
-        catch (__) {}
-      }
-      return '';
-    },
-  })
-    .use(emoji)
-    .use(subscript)
-    .use(superscript)
-    .use(footnote)
-    .use(deflist)
-    .use(abbreviation)
-    .use(insert)
-    .use(mark)
-    .use(tasklists);
 
   const [editing, setEditing] = useState(false);
 
@@ -110,10 +78,8 @@ const EditorView = props => {
     blog.userIcon = props.user.iconURL;
     blog.category = blog.category || 0;
 
-    const url = editing ? `blogs/${props.selectedArticle._id}` : 'blogs/add';
-
     if (editing) {
-      axios.put(url, blog)
+      axios.put(`${BLOG_UPDATE}${props.selectedArticle._id}`, blog)
         .then(res => {
           Cookies.remove('blogSaved');
           props.updatePost({
@@ -126,7 +92,7 @@ const EditorView = props => {
         });
     }
     else {
-      axios.post(url, blog)
+      axios.post(BLOG_CREATE, blog)
         .then(res => {
           Cookies.remove('blogSaved');
           props.addPost(res.data);
@@ -228,4 +194,4 @@ function mapStateToProps(state) {
     user: state.user.user,
   };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(EditorView);
+export default connect(mapStateToProps, mapDispatchToProps)(EditPage);
