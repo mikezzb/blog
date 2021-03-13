@@ -1,0 +1,30 @@
+.section-container {
+    display: flex;
+    flex-direction: column;
+    padding: 60px 50px 0 50px;
+    width: 90%;
+    max-width: 1260px;
+    margin: 0 auto;
+}
+
+.inputFormWrapper{
+    border-left: 3px solid #c5d2d8;
+    margin: 20px 0;
+}
+  
+.inputFormWrapper input {
+    flex: 1;
+}
+
+.rc-md-editor {
+    height: calc(100vh - 340px);
+}
+
+
+@media only screen and (max-width: 1360px) {
+    .section-container{
+        width: auto;
+        padding: 60px 5vw 0 5vw;
+    }
+}
+  

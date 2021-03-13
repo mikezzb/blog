@@ -5,11 +5,11 @@ import { useHistory } from 'react-router-dom';
 import MdEditor from 'react-markdown-editor-lite';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-// import 'highlight.js/styles/github.css'
 import 'react-markdown-editor-lite/lib/index.css';
 import { connect } from 'react-redux';
 import { FiArrowLeft } from 'react-icons/fi';
 
+import './EditPage.css';
 import { BLOG_CREATE, BLOG_UPDATE } from '../constants/apis';
 import mdParser from '../components/edit/mdParser';
 import * as actions from '../store/blog/actions';
@@ -105,7 +105,7 @@ const EditPage = props => {
   };
   const isMobile = window.matchMedia && window.matchMedia('(max-width: 1260px)').matches;
   return (
-    <div style={{ minHeight: '100vh' }}>
+    <div className="edit-page-container">
       <header className="header" style={{ height: '60px' }}>
         <div className="headerWrapper" style={{ marginTop: '3px' }}>
           <FiArrowLeft onClick={() => history.goBack()} style={{ position: 'relative', fontSize: '30px', marginTop: '8px' }} />
@@ -122,7 +122,7 @@ const EditPage = props => {
           </nav>
         </div>
       </header>
-      <section style={{ alignContent: 'center', paddingTop: '60px' }}>
+      <section className="section-container">
         <form onSubmit={() => handleGetMdValue()} style={{}}>
           <div className="inputFormWrapper">
             <input
@@ -163,6 +163,7 @@ const EditPage = props => {
           </div>
         </form>
         <MdEditor
+          className="md-editor-container"
           ref={mdEditor}
           defaultValue={(props.selectedArticle && props.selectedArticle.content) || JSON.parse(Cookies.get('blogSaved') || 'null') && JSON.parse(Cookies.get('blogSaved') || 'null').content || 'Content'}
           renderHTML={renderHTML}

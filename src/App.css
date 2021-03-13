@@ -304,16 +304,6 @@ body {
   cursor: pointer;
 
 }
-.inputFormWrapper{
-  border-left: 3px solid #c5d2d8;
-  margin: 20px auto;
-  max-width: 1260px;
-  width: 90%;
-}
-
-.inputFormWrapper input {
-  flex: 1;
-}
 
 .form-group > textarea{
   background: white;
