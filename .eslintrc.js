@@ -66,6 +66,7 @@ module.exports = {
     'no-alert': 0,
     'max-len': 0,
     'no-mixed-operators': 0,
+    'prefer-rest-params': 0,
   },
   ignorePatterns: [
     '*.css',

@@ -21,7 +21,7 @@ const mdParser = new MarkdownIt({
         return hljs.highlight(lang, str).value;
       }
       catch (e) {
-        console.log(e);
+        console.warn(e);
       }
     }
     return '';

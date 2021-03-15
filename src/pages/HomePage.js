@@ -7,6 +7,7 @@ import {
   AiFillLinkedin, AiFillGithub
 } from 'react-icons/ai';
 
+import useDebounce from '../functions/useDebounce';
 import { BLOG_LOAD } from '../constants/apis';
 import './HomePage.css';
 import Block from '../components/home/Block';
@@ -27,9 +28,7 @@ const HomePage = props => {
     axios.post(BLOG_LOAD, skipJSON)
       .then(res => {
         if (res.data && res.data.length) {
-          // console.warn("server return: "+res.data);
           props.loadBlogSuccess(res.data);
-          window.addEventListener('scroll', listenToScroll);
         }
         else {
           setEnded(true);
@@ -41,15 +40,14 @@ const HomePage = props => {
       });
   };
 
-  const listenToScroll = () => {
+  const listenToScroll = useDebounce(() => {
     const distanceFromBottom = document.documentElement.scrollHeight - document.documentElement.scrollTop - document.documentElement.clientHeight;
     if (distanceFromBottom <= 100) {
-      window.removeEventListener('scroll', listenToScroll);
       if (!props.blog.loaded) {
         loadMore();
       }
     }
-  };
+  }, 500);
 
   const logout = () => {
     props.logout();
@@ -65,13 +63,19 @@ const HomePage = props => {
 
   useEffect(() => {
     if (props.blog.loaded) {
+      window.removeEventListener('scroll', listenToScroll);
       setEnded(true);
     }
-    else if (props.blog.loading === false) {
+    else if (!props.blog.loading) {
       window.addEventListener('scroll', listenToScroll);
     }
     return (() => window.removeEventListener('scroll', listenToScroll));
   }, [props.blog, listenToScroll]);
+
+  const handleViewMyPost = () => {
+    setCategory(category === -2 ? -1 : -2);
+    setDisplayUserIconMenu(false);
+  };
 
   return (
     <div>
@@ -80,7 +84,7 @@ const HomePage = props => {
         <div className="userMenuContainer">
           <div mode="inline" className="menuWrapper">
             <Link to="/edit" className="menuItem" key="Add Post" onClick={addPostOnclick}>Add Post</Link>
-            <div className="menuItem" key="View My Posts" onClick={() => [setCategory(category === -2 ? -1 : -2), setDisplayUserIconMenu(false)]}>View My Posts</div>
+            <div className="menuItem" key="View My Posts" onClick={handleViewMyPost}>View My Posts</div>
             <div className="menuItem" key="Log Out" onClick={logout}>Log Out</div>
           </div>
         </div>

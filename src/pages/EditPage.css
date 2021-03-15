@@ -1,3 +1,17 @@
+.header {
+    height: 60px;
+}
+
+.headerWrapper {
+    margin-top: 3px;
+}
+
+.back-icon {
+    position: relative;
+    font-size: 30px;
+    margin-top: 8px;
+}
+
 .section-container {
     display: flex;
     flex-direction: column;
@@ -27,4 +41,3 @@
         padding: 60px 5vw 0 5vw;
     }
 }
-  

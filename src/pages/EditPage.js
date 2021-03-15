@@ -14,6 +14,26 @@ import { BLOG_CREATE, BLOG_UPDATE } from '../constants/apis';
 import mdParser from '../components/edit/mdParser';
 import * as actions from '../store/blog/actions';
 
+const FORM_ITEMS = [
+  {
+    value: 'title',
+    placeholder: 'Title',
+  },
+  {
+    value: 'tags',
+    placeholder: 'Tags (Optional)',
+  },
+  {
+    value: 'category',
+    placeholder: 'Set category (0-4) (Optional)',
+    type: 'number',
+  },
+  {
+    value: 'backgroundURL',
+    placeholder: 'Cover image URL (Optional)',
+  },
+];
+
 const EditPage = props => {
   const history = useHistory();
   const mdEditor = useRef({});
@@ -25,7 +45,7 @@ const EditPage = props => {
     {
       title: '',
       tags: '',
-      category: null,
+      category: '',
       backgroundURL: '',
     }
   );
@@ -106,10 +126,10 @@ const EditPage = props => {
   const isMobile = window.matchMedia && window.matchMedia('(max-width: 1260px)').matches;
   return (
     <div className="edit-page-container">
-      <header className="header" style={{ height: '60px' }}>
-        <div className="headerWrapper" style={{ marginTop: '3px' }}>
-          <FiArrowLeft onClick={() => history.goBack()} style={{ position: 'relative', fontSize: '30px', marginTop: '8px' }} />
-          <nav className="navSession" style={{ float: 'right', marginRight: '0' }}>
+      <header className="header">
+        <div className="headerWrapper">
+          <FiArrowLeft className="back-icon" onClick={() => history.goBack()} />
+          <nav className="navSession">
             <div className="navItemContainer" onClick={reset}>
               <span className="navItem">Reset</span>
             </div>
@@ -124,43 +144,20 @@ const EditPage = props => {
       </header>
       <section className="section-container">
         <form onSubmit={() => handleGetMdValue()} style={{}}>
-          <div className="inputFormWrapper">
-            <input
-              type="text"
-              required
-              className="form-control"
-              placeholder="Title"
-              value={blogData.title}
-              onChange={e => setBlogData({ title: e.target.value })}
-            />
-          </div>
-          <div className="inputFormWrapper">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Tags (Optional)"
-              value={blogData.tags}
-              onChange={e => setBlogData({ tags: e.target.value })}
-            />
-          </div>
-          <div className="inputFormWrapper">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Cover image URL (Optional)"
-              value={blogData.backgroundURL}
-              onChange={e => setBlogData({ backgroundURL: e.target.value })}
-            />
-          </div>
-          <div className="inputFormWrapper">
-            <input
-              type="number"
-              className="form-control"
-              placeholder="Set category (0-4) (Optional)"
-              value={blogData.category}
-              onChange={e => setBlogData({ category: e.target.value })}
-            />
-          </div>
+          {
+            FORM_ITEMS.map(item =>
+              <div key={item.value} className="inputFormWrapper">
+                <input
+                  type={item.type || 'text'}
+                  required
+                  className="form-control"
+                  placeholder={item.placeholder}
+                  value={blogData[item.value]}
+                  onChange={e => setBlogData({ [item.value]: e.target.value })}
+                />
+              </div>
+            )
+          }
         </form>
         <MdEditor
           className="md-editor-container"
