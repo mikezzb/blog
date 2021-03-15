@@ -100,9 +100,11 @@ const Header = (props, { isArticleView }) => {
       <header className="header home">
         <div className="headerWrapper" style={{}}>
           <div className="logoWrapper" onClick={iconOnclickAction}>
-            {props.user.loggedIn ?
-              <img src={props.user.user.iconURL} alt={props.user.user.username} className="headerIcon" style={{ cursor: 'pointer' }} /> :
-              <img src="https://upload.wikimedia.org/wikipedia/commons/d/dc/Knockoff_Little_Totoro.svg" alt="" className="siteLogo" style={{ cursor: 'pointer' }} />}
+            {
+              props.user.loggedIn ?
+                <img src={props.user.user.iconURL} alt={props.user.user.username} className="headerIcon" style={{ cursor: 'pointer' }} /> :
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/dc/Knockoff_Little_Totoro.svg" alt="" className="siteLogo" style={{ cursor: 'pointer' }} />
+            }
           </div>
           {
             isMobile ?

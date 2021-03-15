@@ -28,6 +28,13 @@ body {
   min-height: 100vh;
 }
 
+/* Common styles */
+
+.flex-row {
+  display: flex;
+  align-items: center;
+}
+
 .header {
   /* overflow: hidden; bug hide the toggle menus */
   width: 100%;
@@ -161,31 +168,6 @@ body {
   padding-bottom: 20px;
 }
 
-.author {
-  display: flex;
-  margin-bottom: 10px;
-}
-
-.author > * {
-  margin: 5px;
-}
-
-.authorName {
-  font-size: 0.8rem;
-  padding: 0.5rem;
-  opacity: 0.7;
-}
-
-.tagName {
-  opacity: 0.7;
-  font-size: 0.8rem;
-  padding: 0.5rem;
-  margin-top: 11px;
-  max-height: 10px;
-  padding-top: 3px;
-  font-size: 0.625rem;
-}
-
 .title {
   font-size: 3.2rem;
 }
@@ -265,28 +247,6 @@ body {
   color: white;
   background-color: transparent;
   border: none;
-}
-
-.submitButton {
-  -webkit-font-smoothing: antialiased;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  flex: 1;
-  position: relative;
-  display: inline-block;
-  padding: 12px 24px;
-  margin: auto;
-  width: 100%;
-  background-color: rgba(32, 35, 42, 1);
-  vertical-align: middle;
-  color: #fff;
-  font-size: 16px;
-  line-height: 20px;
-  text-align: center;
-  letter-spacing: 1px;
-  border: 0;
-  cursor: pointer;
 }
 
 .switchLogin {

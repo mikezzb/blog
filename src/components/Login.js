@@ -34,19 +34,12 @@ const Login = ({ displayLogin, handler }) => {
       };
     }
     else {
-      user = {
-        email: form.email,
-        password: form.password,
-        username: form.username,
-        iconURL: form.iconURL || 'https://pbs.twimg.com/media/CdnxG1vXEAACpY7?format=jpg&name=240x240',
-      };
+      user = { ...form };
     }
-
-    let serverResponse;
 
     axios.post(isLogin ? USER_LOGIN : USER_CREATE, user)
       .then(res => {
-        serverResponse = res.data;
+        let serverResponse = res.data;
         if (isLogin) {
           if (serverResponse === ERRORS.WRONG_PASSWORD || serverResponse === ERRORS.USER_DNE) {
             alert(serverResponse === ERRORS.WRONG_PASSWORD ? 'Wrong Password' : 'Email account does not exist');
@@ -59,9 +52,9 @@ const Login = ({ displayLogin, handler }) => {
           }
         }
         else {
-          Cookies.set('loggedInUser', user, { expires: 1 });
-          displayLogin(user);
-          alert(`Sign up successfully as ${user.username}`);
+          Cookies.set('loggedInUser', serverResponse, { expires: 1 });
+          displayLogin(serverResponse);
+          alert(`Sign up successfully as ${serverResponse.username}`);
         }
       })
       .catch(error => {
@@ -72,6 +65,7 @@ const Login = ({ displayLogin, handler }) => {
       email: '',
       password: '',
       username: '',
+      iconURL: '',
     });
     handler();// to close the view
   };

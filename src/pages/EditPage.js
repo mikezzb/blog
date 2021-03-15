@@ -126,10 +126,10 @@ const EditPage = props => {
   const isMobile = window.matchMedia && window.matchMedia('(max-width: 1260px)').matches;
   return (
     <div className="edit-page-container">
-      <header className="header">
-        <div className="headerWrapper">
+      <header className="header edit-page">
+        <div className="headerWrapper edit-page">
           <FiArrowLeft className="back-icon" onClick={() => history.goBack()} />
-          <nav className="navSession">
+          <nav className="navSession flex-row">
             <div className="navItemContainer" onClick={reset}>
               <span className="navItem">Reset</span>
             </div>

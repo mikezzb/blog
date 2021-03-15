@@ -5,6 +5,7 @@ import axios from 'axios';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { FiArrowLeft, FiEdit } from 'react-icons/fi';
 
+import CommentsView from '../components/article/CommentsView';
 import {
   COMMENT_ADD, COMMENT_LOAD, COMMENT_DELETE, COMMENT_DELETE_ALL, BLOG_DELETE
 } from '../constants/apis';
@@ -19,8 +20,6 @@ import * as actions from '../store/blog/actions';
 
 const dataFormatting = n => (n > 9 ? `${n}` : `0${n}`);
 const toDDMMMYYYY = date => (`${date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).replace(/ /g, ' ')} ${dataFormatting(date.getHours())}:${dataFormatting(date.getMinutes())}`);
-
-const Image = props => (<img {...props} style={{ maxWidth: '100%' }} />);
 
 const ArticlePage = props => {
   const history = useHistory();
@@ -43,7 +42,7 @@ const ArticlePage = props => {
   }, []);
 
   const onSubmit = e => {
-    e.preventDefault(); // to prevent auto refresh due to form submit
+    e.preventDefault();
 
     const comment = {
       content: commentInput,
@@ -77,7 +76,7 @@ const ArticlePage = props => {
         alert(error);
       });
 
-    axios.post(COMMENT_DELETE_ALL, { article_id: selectedArticleID })// to delete all associated comments
+    axios.post(COMMENT_DELETE_ALL, { article_id: selectedArticleID }) // to delete all associated comments
       .then(() => {})
       .catch(error => {
         console.warn(error);
@@ -151,59 +150,7 @@ const ArticlePage = props => {
             className={`blog-body ${window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'markdown-body-dark' : 'markdown-body'}`}
             dangerouslySetInnerHTML={{ __html: mdParser.render(selectedArticle.content) }}
           />
-          <div className="replyBackground">
-            <div className="replyWrapper">
-              <div className="replyTag">Replies:</div>
-              {
-                comments.map(comment => (
-                  <div style={{ cursor: 'auto', marginTop: '30px' }} className="blockWrapper reply">
-                    <div className="blockInnerWrapper" style={{ padding: '5px 8px' }}>
-                      <div className="author">
-                        <img className="icon" src={comment.userIcon} alt="icon" />
-                        <p className="authorName">{comment.username}</p>
-                        <div className="tagName">{toDDMMMYYYY(new Date(comment.createdAt))}</div>
-                        {
-                          comment.username === props.user.username &&
-                          <div
-                            onClick={() => deleteComment(comment._id)}
-                            style={{
-                              cursor: 'pointer', float: 'right', width: '16px', height: '16px', marginLeft: 'auto', marginTop: '10px',
-                            }}
-                          >
-                            <AiOutlineDelete />
-                          </div>
-                        }
-                      </div>
-                      <div
-                        className="blockContent"
-                        style={{
-                          margin: '10px 7px', maxHeight: 'none', textOverflow: 'clip', whiteSpace: 'normal', overflow: 'visible',
-                        }}
-                      >
-                        {comment.content}
-                      </div>
-                    </div>
-                  </div>
-                ))
-              }
-              <form onSubmit={onSubmit}>
-                <div className="form-group" style={{ width: '100%' }}>
-                  <textarea
-                    required
-                    className="form-control"
-                    placeholder={props.user.username ? '偉論' : 'Please login before posting comment'}
-                    value={commentInput}
-                    onChange={e => setCommentInput(e.target.value)}
-                    disabled={!props.user.username}
-                    style={{ flexGrow: '1', minHeight: '60px' }}
-                  />
-                </div>
-                <div className="form-group-submit" style={{ width: '100%' }}>
-                  <input type="submit" value="Submit" className="submitButton" />
-                </div>
-              </form>
-            </div>
-          </div>
+          <CommentsView />
         </div>
       </div>
     </div>

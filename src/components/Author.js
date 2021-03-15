@@ -1,4 +1,5 @@
 import React from 'react';
+import './Author.css';
 
 export default function Author({
   isArticle, tag, children, icon,
