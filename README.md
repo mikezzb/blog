@@ -1,68 +1,44 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Welcome To Mike's Blog
 
-## Available Scripts
+>This is my hello world project in MERN Stack. The frontend part is written in React.js, with the uses of Redux, Cookies, and other external npm packages. The server part used the Express.js framework and Mongoose. While the database is hosted on MongoDB Atlas.
 
-In the project directory, you can run:
+#### Beginner's Guide
 
-### `yarn start`
+Can you see the little Totoro in the left corner of the header bar like this? 
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+![](https://ih1.redbubble.net/image.787242372.7509/flat,128x128,075,t.u1.jpg)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Click it! And you will see the signup and login window now~ 
 
-### `yarn test`
+![](https://i.ibb.co/ccpJCBz/Screen-Shot-2020-05-24-at-9-46-30-PM.png)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+After you have signed up and logged in, you will be able to see your user icon replaced the little Totoro. 
+By Clicking on your Icon, you will see the user functions. 
 
-### `yarn build`
+![](https://i.ibb.co/ZXVP2Gb/Screen-Shot-2020-05-24-at-9-48-09-PM.png)
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Then you can use the editor to write a blog in *Markdown* syntax.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```markdown
+### I am a H3 Header!!
+![](image.png) // I am a picture
+```
+use triple backtick to insert code fragment such as
+```C
+#include <stdio.h>
+int main(){
+     printf("I am C");
+}
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
+Feel free to explore others' posts and use the comment function to leave your feedback as well. You can also click the delete button to delete your own comment.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![](https://i.ibb.co/QcGsFph/Screen-Shot-2020-05-24-at-10-47-32-PM.png)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+BTW, if you are the author of that post, you will be able to edit and delete your post from these two buttons on your article page, given you have already logged in. 
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+![Imgur](https://i.imgur.com/9Vr4cCG.png)
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Thank you for your visit~
