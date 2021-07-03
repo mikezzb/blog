@@ -1,25 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import {
-  AiFillLinkedin, AiFillGithub
+  AiFillLinkedin, AiFillGithub,
 } from 'react-icons/ai';
 
-import { MyLocation } from '../interfaces';
-import useDebounce from '../functions/useDebounce';
+import store, { AppDispatch, RootState } from '../store';
+import loadBlog from '../store/Blog';
+import { ILocation, IPost } from '../interfaces';
+import useDebounce from '../utils/useDebounce';
 import { BLOG_LOAD } from '../constants/apis';
 import './HomePage.css';
 import Block from '../components/home/Block';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
-import * as actions from '../store/blog/actions';
+import * as blogActions from '../store/blog/actions';
+import * as userActions from '../store/user/actions';
+import { INITIAL_LOADING_SKIP } from '../constants/config';
+import { CATEGORIES } from '../constants';
 
-const HomePage = (props: { blog: { posts: any[]; loaded: any; loading: any; }; loadBlogSuccess: (arg0: any) => void; allLoaded: () => void; logout: () => void; cookies: any; user: { user: { username: any; }; }; }) => {
+const HomePage = (props: PropsFromRedux) => {
   const [ended, setEnded] = useState(false);
   const [displayUserIconMenu, setDisplayUserIconMenu] = useState(false);
-  const [category, setCategory] = useState(-1);
+  const [category, setCategory] = useState(CATEGORIES.INITIAL);
 
   const loadMore = () => {
     const skipJSON = {
@@ -52,7 +57,7 @@ const HomePage = (props: { blog: { posts: any[]; loaded: any; loading: any; }; l
 
   const logout = () => {
     props.logout();
-    setCategory(-1);
+    setCategory(CATEGORIES.INITIAL);
     Cookies.remove('loggedInUser');
     setDisplayUserIconMenu(false);
     alert('Logged out successfully!');
@@ -61,6 +66,10 @@ const HomePage = (props: { blog: { posts: any[]; loaded: any; loading: any; }; l
   const addPostOnclick = () => {
     setDisplayUserIconMenu(false);
   };
+
+  useEffect(() => {
+    store.dispatch(loadBlog(INITIAL_LOADING_SKIP) as any);
+  }, []);
 
   useEffect(() => {
     if (props.blog.loaded) {
@@ -74,9 +83,12 @@ const HomePage = (props: { blog: { posts: any[]; loaded: any; loading: any; }; l
   }, [props.blog, listenToScroll]);
 
   const handleViewMyPost = () => {
-    setCategory(category === -2 ? -1 : -2);
+    setCategory(category === CATEGORIES.MY_POST ? CATEGORIES.INITIAL : CATEGORIES.MY_POST);
     setDisplayUserIconMenu(false);
   };
+
+  const filterPosts = (post: IPost) =>
+    category === post.category || category === CATEGORIES.INITIAL || (category === CATEGORIES.MY_POST && props.user.user && props.user.user.username === post.username);
 
   return (
     <div>
@@ -91,7 +103,6 @@ const HomePage = (props: { blog: { posts: any[]; loaded: any; loading: any; }; l
         </div>
       }
       <Header
-        cookies={props.cookies}
         updateCategory={setCategory}
         isArticleView={false}
         userIconOnclick={() => setDisplayUserIconMenu(!displayUserIconMenu)}
@@ -105,15 +116,15 @@ const HomePage = (props: { blog: { posts: any[]; loaded: any; loading: any; }; l
                 <div className="left blocks">
                   {
                     props.blog.posts
-                      .filter((post: { category: number; username: any; }) => category === post.category || category === -1 || (category === -2 && props.user.user.username === post.username))
-                      .map((post: { _id: React.Key; createdAt: React.Key; category: any; tags: any; userIcon: any; username: any; content: any; backgroundURL: any; title: any; }) => (
+                      .filter(filterPosts)
+                      .map((post: IPost) => (
                         <Link
                           key={post._id}
                           className="blockWrapper"
                           to={{
                             pathname: `/article/${post._id}`,
                             index: props.blog.posts.findIndex((postItem: { createdAt: any; }) => postItem.createdAt === post.createdAt),
-                          } as MyLocation}
+                          } as ILocation}
                         >
                           <Block
                             category={post.category}
@@ -161,23 +172,28 @@ const HomePage = (props: { blog: { posts: any[]; loaded: any; loading: any; }; l
   );
 };
 
-function mapStateToProps(state: { blog: any; user: any; }, ownProps: any) {
-  return {
-    blog: state.blog,
-    user: state.user,
-  };
-}
+const mapStateToProps = (state: RootState) => ({
+  blog: state.blog,
+  user: state.user,
+});
 
-const mapDispatchToProps = (dispatch: (arg0: { type: string; isLoading?: boolean; posts?: any; loaded?: boolean; }) => void) => ({
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
   blogLoading: () => {
-    dispatch(actions.blogLoading());
+    dispatch(blogActions.blogLoading());
   },
-  loadBlogSuccess: (posts: any) => {
-    dispatch(actions.loadBlogSuccess(posts));
+  loadBlogSuccess: (posts: IPost[]) => {
+    dispatch(blogActions.loadBlogSuccess(posts));
   },
   allLoaded: () => {
-    dispatch(actions.allLoaded());
+    dispatch(blogActions.allLoaded());
+  },
+  logout: () => {
+    dispatch(userActions.logout());
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(HomePage);

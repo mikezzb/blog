@@ -1,0 +1,12 @@
+enum CATEGORIES {
+  PLAYGROUND,
+  LEARNING,
+  ACG,
+  TIME_MACHINE,
+  INITIAL,
+  MY_POST,
+}
+
+export {
+  CATEGORIES,
+};

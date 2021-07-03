@@ -5,5 +5,5 @@ import HomePage from './HomePage';
 export {
   ArticlePage,
   EditPage,
-  HomePage
+  HomePage,
 };

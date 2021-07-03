@@ -1,8 +1,9 @@
 import axios from 'axios';
 import * as actions from './blog/actions';
 import { BLOG_LOAD } from '../constants/apis';
+import { ISkip } from '../interfaces';
 
-export default function loadBlog(skipJSON) {
+export default function loadBlog(skipJSON: ISkip) {
   return async dispatch => {
     dispatch(actions.blogLoading());
     try {

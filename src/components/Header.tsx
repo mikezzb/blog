@@ -1,16 +1,28 @@
 import React, { useState, useReducer, useEffect } from 'react';
 import { isMobile } from 'react-device-detect';
 import { slide as Menu } from 'react-burger-menu';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import Cookies from 'js-cookie';
+
+import { CATEGORIES } from '../constants';
 import * as actions from '../store/user/actions';
 import LoginView from './Login';
 import TitleView from './Title';
-import getGradient from '../functions/getGradient';
+import getGradient from '../utils/getGradient';
+import { AppDispatch, RootState } from '../store';
+import { IPost, IUser } from '../interfaces';
 
 const navTags = ['All', 'Playground', 'Learning', 'ACG', 'Time Machine'];
 
-const Header = (props, { isArticleView }) => {
+interface IHeaderProps extends PropsFromRedux {
+  isArticleView: boolean,
+  userIconOnclick?: any,
+  updateCategory?: any,
+  selectedArticle?: IPost,
+  goBack?: any,
+}
+
+const Header = (props: IHeaderProps) => {
   const [displayLogin, setDisplayLogin] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -18,19 +30,15 @@ const Header = (props, { isArticleView }) => {
   const [navClicked, setNavClicked] = useReducer(
     (state, active) => Object.keys(state).reduce(
       (result, nav) => ({ ...result, [nav]: active === nav }),
-      {}
+      {},
     ),
     {
       all: true,
-    }
+    },
   );
 
-  const tagOnclick = index => {
-    if (props.isArticleView) {
-      props.updateCategory(index - 1);
-      props.goBack();
-    }
-    else props.updateCategory(index - 1);
+  const tagOnclick = (index, label) => {
+    props.updateCategory(label === 'All' ? CATEGORIES.INITIAL : index - 1);
     setMenuOpen(false);
   };
 
@@ -51,7 +59,11 @@ const Header = (props, { isArticleView }) => {
 
   const NavElements = () => (
     navTags.map((tag, index) => (
-      <div className={navClicked[tag] ? 'navItemContainerClicked' : 'navItemContainer'} onClick={() => [setNavClicked(tag), tagOnclick(index)]} key={tag}>
+      <div
+        className={navClicked[tag] ? 'navItemContainerClicked' : 'navItemContainer'}
+        onClick={() => [setNavClicked(tag), tagOnclick(index, tag)]}
+        key={tag}
+      >
         <span className="navItem">{tag}</span>
       </div>
     ))
@@ -87,7 +99,6 @@ const Header = (props, { isArticleView }) => {
             username={props.selectedArticle.username}
             isArticle={props.isArticleView}
             tag={props.selectedArticle.tags}
-            date={props.selectedArticle.createdAt}
           >
             {props.selectedArticle.title}
           </TitleView>
@@ -135,15 +146,18 @@ const Header = (props, { isArticleView }) => {
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    user: state.user,
-  };
-}
-const mapDispatchToProps = dispatch => ({
-  displayLogin: user => {
+const mapStateToProps = (state: RootState) => ({
+  user: state.user,
+});
+
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  displayLogin: (user: IUser) => {
     dispatch(actions.displayLogin(user));
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(Header);

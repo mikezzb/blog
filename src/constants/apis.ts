@@ -30,5 +30,5 @@ export {
   BLOG_DELETE,
   BLOG_CREATE,
   BLOG_UPDATE,
-  BLOG_LOAD
+  BLOG_LOAD,
 };

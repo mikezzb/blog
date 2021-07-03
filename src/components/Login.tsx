@@ -1,17 +1,23 @@
 import React, { useState, useReducer } from 'react';
 import axios from 'axios';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import Cookies from 'js-cookie';
 
 import { USER_LOGIN, USER_CREATE } from '../constants/apis';
 import * as actions from '../store/user/actions';
+import { AppDispatch } from '../store';
+import { IUser } from '../interfaces';
 
 const ERRORS = Object.freeze({
   WRONG_PASSWORD: 0,
   USER_DNE: 1,
 });
 
-const Login = ({ displayLogin, handler }) => {
+interface ILoginProps extends PropsFromRedux {
+  handler: any,
+}
+
+const Login = ({ displayLogin, handler }: ILoginProps) => {
   const [isLogin, setIsLogin] = useState(false);
 
   const [form, dispatchForm] = useReducer(
@@ -21,7 +27,7 @@ const Login = ({ displayLogin, handler }) => {
       password: '',
       username: '',
       iconURL: '',
-    }
+    },
   );
 
   const onSubmit = e => {
@@ -148,10 +154,14 @@ const Login = ({ displayLogin, handler }) => {
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  displayLogin: user => {
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  displayLogin: (user: IUser) => {
     dispatch(actions.displayLogin(user));
   },
 });
 
-export default connect(null, mapDispatchToProps)(Login);
+const connector = connect(null, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(Login);

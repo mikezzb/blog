@@ -1,18 +1,21 @@
 import React, {
-  useState, useRef, useEffect, useReducer, MutableRefObject
+  useState, useRef, useEffect, useReducer, MutableRefObject,
 } from 'react';
 import { useHistory } from 'react-router-dom';
 import MdEditor from 'react-markdown-editor-lite';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import 'react-markdown-editor-lite/lib/index.css';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { FiArrowLeft } from 'react-icons/fi';
 
 import './EditPage.css';
+import { CATEGORIES } from 'src/constants';
 import { BLOG_CREATE, BLOG_UPDATE } from '../constants/apis';
 import mdParser from '../components/edit/mdParser';
 import * as actions from '../store/blog/actions';
+import { AppDispatch, RootState } from '../store';
+import { IPost } from '../interfaces';
 
 const FORM_ITEMS = [
   {
@@ -39,7 +42,12 @@ interface IMdEditor {
   setText?: (value: string) => any,
 }
 
-const EditPage = props => {
+interface IEditPageProps extends PropsFromRedux {
+  selectedArticle?: IPost,
+  goBack?: () => any,
+}
+
+const EditPage = (props: IEditPageProps) => {
   const history = useHistory();
   const mdEditor: MutableRefObject<IMdEditor> = useRef({});
 
@@ -52,7 +60,7 @@ const EditPage = props => {
       tags: '',
       category: '',
       backgroundURL: '',
-    }
+    },
   );
 
   const renderHTML = text => new Promise(resolve => {
@@ -84,7 +92,7 @@ const EditPage = props => {
     const blog = blogData;
     blog.username = props.user.username;
     blog.content = mdEditor.current.getMdValue();
-    blog.category = blog.category || 0;
+    blog.category = blog.category || CATEGORIES.PLAYGROUND;
     Cookies.set('blogSaved', blog, { expires: 3 });
     alert('Saved as Draft!');
   };
@@ -100,11 +108,11 @@ const EditPage = props => {
     blog.content = mdEditor.current.getMdValue();
     blog.username = props.user.username;
     blog.userIcon = props.user.iconURL;
-    blog.category = blog.category || 0;
+    blog.category = blog.category || CATEGORIES.PLAYGROUND;
 
     if (editing) {
       axios.put(`${BLOG_UPDATE}${props.selectedArticle._id}`, blog)
-        .then(res => {
+        .then(() => {
           Cookies.remove('blogSaved');
           props.updatePost({
             ...blog,
@@ -132,7 +140,7 @@ const EditPage = props => {
     <div className="edit-page-container">
       <header className="header edit-page">
         <div className="headerWrapper edit-page">
-          <FiArrowLeft className="back-icon" onClick={() => history.goBack()} />
+          <FiArrowLeft className="back-icon" onClick={() => props.goBack ? props.goBack() : history.goBack()} />
           <nav className="navSession flex-row">
             <div className="navItemContainer" onClick={reset}>
               <span className="navItem">Reset</span>
@@ -181,7 +189,7 @@ const EditPage = props => {
   );
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
   addPost: post => {
     dispatch(actions.addPost(post));
   },
@@ -190,9 +198,12 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-function mapStateToProps(state) {
-  return {
-    user: state.user.user,
-  };
-}
-export default connect(mapStateToProps, mapDispatchToProps)(EditPage);
+const mapStateToProps = (state: RootState) => ({
+  user: state.user.user,
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(EditPage);

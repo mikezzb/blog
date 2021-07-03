@@ -1,12 +1,22 @@
 import React from 'react';
 import Author from '../Author';
-import getGradient from '../../functions/getGradient';
+import getGradient from '../../utils/getGradient';
+import { toDDMMMYYYY } from '../../utils';
 
-const toDDMMMYYYY = date => (date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).replace(/ /g, ' '));
+type IBlockProps = {
+  tag: string,
+  date: string,
+  icon: string,
+  username: string,
+  content: string,
+  background: string,
+  title: string,
+  category: number,
+};
 
 export default function Block({
   tag, date, icon, username, content, background, title, category,
-}) {
+}: IBlockProps) {
   const hasCover = (background !== '0' && background !== '');
   return (
     <>

@@ -1,4 +1,6 @@
-export default {
+import { ICombinedStore } from '../interfaces';
+
+const Store: ICombinedStore = {
   blog: {
     loading: false,
     posts: [],
@@ -6,6 +8,8 @@ export default {
   },
   user: {
     loggedIn: false,
-    user: [],
+    user: {},
   },
 };
+
+export default Store;

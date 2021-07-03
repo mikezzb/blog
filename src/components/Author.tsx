@@ -1,9 +1,15 @@
-import React from 'react';
+import { PropsWithChildren } from 'react';
 import './Author.css';
+
+type IAuthorProps = {
+  isArticle: boolean,
+  tag: string,
+  icon: string,
+};
 
 export default function Author({
   isArticle, tag, children, icon,
-}) {
+}: PropsWithChildren<IAuthorProps>) {
   return (
     <div className={`author ${isArticle ? ' article' : ''}`}>
       <img

@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { AiOutlineDelete } from 'react-icons/ai';
 
 import './CommentsView.css';
 import {
-  COMMENT_ADD, COMMENT_LOAD, COMMENT_DELETE
+  COMMENT_ADD, COMMENT_LOAD, COMMENT_DELETE,
 } from '../../constants/apis';
 import * as actions from '../../store/blog/actions';
+import { AppDispatch, RootState } from '../../store';
+import { toDDMMMYYYY } from '../../utils';
 
-const dataFormatting = n => (n > 9 ? `${n}` : `0${n}`);
-const toDDMMMYYYY = date => (`${date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).replace(/ /g, ' ')} ${dataFormatting(date.getHours())}:${dataFormatting(date.getMinutes())}`);
-
-const CommentsView = props => {
+const CommentsView = (props: PropsFromRedux) => {
   const selectedArticleID = (useParams() as any).id;
   const [comments, setComments] = useState([]);
   const [commentInput, setCommentInput] = useState('');
@@ -36,8 +35,8 @@ const CommentsView = props => {
 
     const comment = {
       content: commentInput,
-      username: props.user.username,
-      userIcon: props.user.iconURL,
+      username: props.user.user.username,
+      userIcon: props.user.user.iconURL,
       article_id: selectedArticleID,
     };
 
@@ -79,7 +78,7 @@ const CommentsView = props => {
                   <p className="authorName">{comment.username || 'Anonymous'}</p>
                   <div className="tagName">{toDDMMMYYYY(new Date(comment.createdAt))}</div>
                   {
-                    comment.username && comment.username === props.user.username &&
+                    comment.username && comment.username === props.user.user.username &&
                     (
                       <div
                         onClick={() => deleteComment(comment._id)}
@@ -124,17 +123,19 @@ const CommentsView = props => {
   );
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
   deletePost: id => {
     dispatch(actions.deletePost(id));
   },
 });
 
-function mapStateToProps(state, ownProps) {
-  return {
-    blog: state.blog,
-    user: state.user.user || {},
-  };
-}
+const mapStateToProps = (state: RootState) => ({
+  blog: state.blog,
+  user: state.user,
+});
 
-export default connect(mapStateToProps, mapDispatchToProps)(CommentsView);
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+export default connector(CommentsView);

@@ -1,42 +1,31 @@
-import React from 'react';
 import './App.css';
-import { connect } from 'react-redux';
 import {
   HashRouter as Router,
   Switch,
-  Route
+  Route,
 } from 'react-router-dom';
 import {
   ArticlePage,
   EditPage,
-  HomePage
+  HomePage,
 } from './pages';
-import * as actions from './store/user/actions';
 
-const App = props => (
+const App = () => (
   <div className="app">
     <Router>
       <Switch>
         <Route exact path="/">
-          <HomePage
-            {...props}
-          />
+          <HomePage />
         </Route>
         <Route exact path="/article/:id">
-          <ArticlePage {...props} />
+          <ArticlePage />
         </Route>
         <Route exact path="/edit">
-          <EditPage {...props} />
+          <EditPage />
         </Route>
       </Switch>
     </Router>
   </div>
 );
 
-const mapDispatchToProps = dispatch => ({
-  logout: () => {
-    dispatch(actions.logout());
-  },
-});
-
-export default connect(null, mapDispatchToProps)(App);
+export default App;
