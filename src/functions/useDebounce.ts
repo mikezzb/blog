@@ -9,6 +9,8 @@ export default function useDebounce(fn, delay) {
     if (current.timer) {
       clearTimeout(current.timer);
     }
-    current.timer = setTimeout(() => current.fn(...arguments), delay);
+    current.timer = setTimeout(function () {
+      current.fn(...arguments);
+    }, delay);
   }, [current, delay]);
 }

@@ -81,7 +81,7 @@ const Login = ({ displayLogin, handler }) => {
         placeholder="Username"
         value={form.username}
         onChange={e => dispatchForm({ username: e.target.value })}
-        style={{ flexGrow: '1' }}
+        style={{ flexGrow: 1 }}
       />
     </div>,
   ];
@@ -93,7 +93,7 @@ const Login = ({ displayLogin, handler }) => {
         placeholder="User Icon URL (optional)"
         value={form.iconURL}
         onChange={e => dispatchForm({ iconURL: e.target.value })}
-        style={{ flexGrow: '1' }}
+        style={{ flexGrow: 1 }}
       />
     </div>,
   ];
@@ -118,7 +118,7 @@ const Login = ({ displayLogin, handler }) => {
               placeholder="Email"
               value={form.email}
               onChange={e => dispatchForm({ email: e.target.value })}
-              style={{ flexGrow: '1' }}
+              style={{ flexGrow: 1 }}
             />
           </div>
           <div className="form-group">
@@ -129,7 +129,7 @@ const Login = ({ displayLogin, handler }) => {
               placeholder="Password"
               value={form.password}
               onChange={e => dispatchForm({ password: e.target.value })}
-              style={{ flexGrow: '1' }}
+              style={{ flexGrow: 1 }}
             />
           </div>
           {isLogin ? null : iconURLField}

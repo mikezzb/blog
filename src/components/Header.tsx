@@ -108,20 +108,24 @@ const Header = (props, { isArticleView }) => {
           </div>
           {
             isMobile ?
-              <Menu
-                key="menu"
-                right
-                noOverlay
-                isOpen={menuOpen}
-                onStateChange={state => setMenuOpen(state.isOpen)}
-                onClick={() => setMenuOpen(false)}
-              >
-                {NavElements()}
-              </Menu> :
+              (
+                <Menu
+                  key="menu"
+                  right
+                  noOverlay
+                  isOpen={menuOpen}
+                  onStateChange={state => setMenuOpen(state.isOpen)}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {NavElements()}
+                </Menu>
+              ) :
 
-              <nav className="navSession">
-                {NavElements()}
-              </nav>
+              (
+                <nav className="navSession">
+                  {NavElements()}
+                </nav>
+              )
 
           }
         </div>

@@ -21,9 +21,13 @@ import * as actions from '../store/blog/actions';
 const dataFormatting = n => (n > 9 ? `${n}` : `0${n}`);
 const toDDMMMYYYY = date => (`${date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).replace(/ /g, ' ')} ${dataFormatting(date.getHours())}:${dataFormatting(date.getMinutes())}`);
 
+type IArticleParams = {
+  id: string,
+};
+
 const ArticlePage = props => {
   const history = useHistory();
-  const selectedArticleID = useParams().id;
+  const { id: selectedArticleID } = useParams<IArticleParams>();
   const [comments, setComments] = useState([]);
   const [commentInput, setCommentInput] = useState('');
   const [editing, setEditing] = useState(false);

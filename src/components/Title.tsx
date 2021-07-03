@@ -6,7 +6,7 @@ export default function Title({
 }) {
   return (
     <div className="titleWrapper">
-      <Author icon={icon} isArticle={isArticle} tag={tag} date={date}>{username}</Author>
+      <Author icon={icon} isArticle={isArticle} tag={tag}>{username}</Author>
       <div className="title">{children}</div>
     </div>
   );

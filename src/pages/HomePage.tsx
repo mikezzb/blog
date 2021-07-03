@@ -7,6 +7,7 @@ import {
   AiFillLinkedin, AiFillGithub
 } from 'react-icons/ai';
 
+import { MyLocation } from '../interfaces';
 import useDebounce from '../functions/useDebounce';
 import { BLOG_LOAD } from '../constants/apis';
 import './HomePage.css';
@@ -15,7 +16,7 @@ import Header from '../components/Header';
 import Loading from '../components/Loading';
 import * as actions from '../store/blog/actions';
 
-const HomePage = props => {
+const HomePage = (props: { blog: { posts: any[]; loaded: any; loading: any; }; loadBlogSuccess: (arg0: any) => void; allLoaded: () => void; logout: () => void; cookies: any; user: { user: { username: any; }; }; }) => {
   const [ended, setEnded] = useState(false);
   const [displayUserIconMenu, setDisplayUserIconMenu] = useState(false);
   const [category, setCategory] = useState(-1);
@@ -82,7 +83,7 @@ const HomePage = props => {
       {
         displayUserIconMenu &&
         <div className="userMenuContainer">
-          <div mode="inline" className="menuWrapper">
+          <div className="menuWrapper">
             <Link to="/edit" className="menuItem" key="Add Post" onClick={addPostOnclick}>Add Post</Link>
             <div className="menuItem" key="View My Posts" onClick={handleViewMyPost}>View My Posts</div>
             <div className="menuItem" key="Log Out" onClick={logout}>Log Out</div>
@@ -99,54 +100,53 @@ const HomePage = props => {
         {
           props.blog.loading ?
             <Loading /> :
-            <>
-              <div className="left blocks">
-                {
-                  props.blog.posts
-                    .filter(post =>
-                      category === post.category || category === -1 || (category === -2 && props.user.user.username === post.username)
-                    )
-                    .map(post => (
-                      <Link
-                        key={post._id}
-                        className="blockWrapper"
-                        to={{
-                          pathname: `/article/${post._id}`,
-                          index: props.blog.posts.findIndex(postItem => postItem.createdAt === post.createdAt),
-                        }}
-                      >
-                        <Block
-                          category={post.category}
-                          tag={post.tags}
-                          date={post.createdAt}
-                          icon={post.userIcon}
-                          username={post.username}
-                          key={post.createdAt}
-                          content={post.content}
-                          background={post.backgroundURL}
-                          articleIndex={props.blog.posts.findIndex(postItem => postItem.createdAt === post.createdAt)}
-                          title={post.title}
-                        />
-                      </Link>
-                    ))
-                }
-              </div>
-              <div className="right about">
-                <div className="center top">
-                  <span className="my-icon" onClick={() => window.open('https://mikezzb.github.io/')} />
-                  <div className="about text">
-                    <h3>Mike</h3>
-                    <p>Yet another human being</p>
+            (
+              <>
+                <div className="left blocks">
+                  {
+                    props.blog.posts
+                      .filter((post: { category: number; username: any; }) => category === post.category || category === -1 || (category === -2 && props.user.user.username === post.username))
+                      .map((post: { _id: React.Key; createdAt: React.Key; category: any; tags: any; userIcon: any; username: any; content: any; backgroundURL: any; title: any; }) => (
+                        <Link
+                          key={post._id}
+                          className="blockWrapper"
+                          to={{
+                            pathname: `/article/${post._id}`,
+                            index: props.blog.posts.findIndex((postItem: { createdAt: any; }) => postItem.createdAt === post.createdAt),
+                          } as MyLocation}
+                        >
+                          <Block
+                            category={post.category}
+                            tag={post.tags}
+                            date={post.createdAt}
+                            icon={post.userIcon}
+                            username={post.username}
+                            key={post.createdAt}
+                            content={post.content}
+                            background={post.backgroundURL}
+                            title={post.title}
+                          />
+                        </Link>
+                      ))
+                  }
+                </div>
+                <div className="right about">
+                  <div className="center top">
+                    <span className="my-icon" onClick={() => window.open('https://mikezzb.github.io/')} />
+                    <div className="about text">
+                      <h3>Mike</h3>
+                      <p>Yet another human being</p>
+                    </div>
+                  </div>
+                  <div className="bottom">
+                    <div>
+                      <AiFillGithub className="social-media" onClick={() => window.open('https://github.com/mikezzb')} />
+                      <AiFillLinkedin className="social-media" onClick={() => window.open('https://www.linkedin.com/in/mikezzb')} />
+                    </div>
                   </div>
                 </div>
-                <div className="bottom">
-                  <div>
-                    <AiFillGithub className="social-media" onClick={() => window.open('https://github.com/mikezzb')} />
-                    <AiFillLinkedin className="social-media" onClick={() => window.open('https://www.linkedin.com/in/mikezzb')} />
-                  </div>
-                </div>
-              </div>
-            </>
+              </>
+            )
         }
       </div>
       {
@@ -161,18 +161,18 @@ const HomePage = props => {
   );
 };
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state: { blog: any; user: any; }, ownProps: any) {
   return {
     blog: state.blog,
     user: state.user,
   };
 }
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch: (arg0: { type: string; isLoading?: boolean; posts?: any; loaded?: boolean; }) => void) => ({
   blogLoading: () => {
     dispatch(actions.blogLoading());
   },
-  loadBlogSuccess: posts => {
+  loadBlogSuccess: (posts: any) => {
     dispatch(actions.loadBlogSuccess(posts));
   },
   allLoaded: () => {

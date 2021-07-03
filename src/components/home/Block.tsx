@@ -11,7 +11,7 @@ export default function Block({
   return (
     <>
       <span>
-        <Author tag={tag} icon={icon}>{username}</Author>
+        <Author tag={tag} icon={icon} isArticle={false}>{username}</Author>
         <div className="blockTitle">{title}</div>
         <div className="blockContent">{content.split(/\n/).map((p, i) => i < 4 && p !== '' && `${p.replace(/#|\*|!\[\]|>|^\s*\n/gm, '').replace(/^\s/m, '')}\n`)}</div>
         <span>{toDDMMMYYYY(new Date(date))}</span>

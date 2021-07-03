@@ -1,5 +1,5 @@
 import React, {
-  useState, useRef, useEffect, useReducer
+  useState, useRef, useEffect, useReducer, MutableRefObject
 } from 'react';
 import { useHistory } from 'react-router-dom';
 import MdEditor from 'react-markdown-editor-lite';
@@ -34,9 +34,14 @@ const FORM_ITEMS = [
   },
 ];
 
+interface IMdEditor {
+  getMdValue?: () => any,
+  setText?: (value: string) => any,
+}
+
 const EditPage = props => {
   const history = useHistory();
-  const mdEditor = useRef({});
+  const mdEditor: MutableRefObject<IMdEditor> = useRef({});
 
   const [editing, setEditing] = useState(false);
 
@@ -50,12 +55,11 @@ const EditPage = props => {
     }
   );
 
-  const renderHTML = text =>
-    new Promise(resolve => {
-      setTimeout(() => {
-        resolve(mdParser.render(text));
-      }, 1000);
-    });
+  const renderHTML = text => new Promise(resolve => {
+    setTimeout(() => {
+      resolve(mdParser.render(text));
+    }, 1000);
+  });
 
   const init = async () => {
     const raw = Cookies.get('blogSaved' || '');
@@ -143,9 +147,9 @@ const EditPage = props => {
         </div>
       </header>
       <section className="section-container">
-        <form onSubmit={() => handleGetMdValue()} style={{}}>
+        <form onSubmit={e => handleGetMdValue(e)} style={{}}>
           {
-            FORM_ITEMS.map(item =>
+            FORM_ITEMS.map(item => (
               <div key={item.value} className="inputFormWrapper">
                 <input
                   type={item.type || 'text'}
@@ -156,14 +160,13 @@ const EditPage = props => {
                   onChange={e => setBlogData({ [item.value]: e.target.value })}
                 />
               </div>
-            )
+            ))
           }
         </form>
         <MdEditor
-          className="md-editor-container"
-          ref={mdEditor}
+          ref={mdEditor as any}
           defaultValue={(props.selectedArticle && props.selectedArticle.content) || JSON.parse(Cookies.get('blogSaved') || 'null') && JSON.parse(Cookies.get('blogSaved') || 'null').content || 'Content'}
-          renderHTML={renderHTML}
+          renderHTML={renderHTML as any}
           config={{
             view: {
               menu: true,

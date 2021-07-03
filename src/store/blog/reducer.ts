@@ -30,10 +30,9 @@ export default function blogReducer(state = initialState.blog, action) {
     case types.UPDATE_POST: {
       return {
         ...state,
-        posts: state.posts.map(post => post._id === action.post._id ?
+        posts: state.posts.map(post => (post._id === action.post._id ?
           { ...post, ...action.post } :
-          post
-        ),
+          post)),
       }; }
     case types.DELETE_POST:
       return {

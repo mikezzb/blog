@@ -14,7 +14,7 @@ const dataFormatting = n => (n > 9 ? `${n}` : `0${n}`);
 const toDDMMMYYYY = date => (`${date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).replace(/ /g, ' ')} ${dataFormatting(date.getHours())}:${dataFormatting(date.getMinutes())}`);
 
 const CommentsView = props => {
-  const selectedArticleID = useParams().id;
+  const selectedArticleID = (useParams() as any).id;
   const [comments, setComments] = useState([]);
   const [commentInput, setCommentInput] = useState('');
 
@@ -80,14 +80,16 @@ const CommentsView = props => {
                   <div className="tagName">{toDDMMMYYYY(new Date(comment.createdAt))}</div>
                   {
                     comment.username && comment.username === props.user.username &&
-                    <div
-                      onClick={() => deleteComment(comment._id)}
-                      style={{
-                        cursor: 'pointer', float: 'right', width: '16px', height: '16px', marginLeft: 'auto', marginTop: '10px',
-                      }}
-                    >
-                      <AiOutlineDelete />
-                    </div>
+                    (
+                      <div
+                        onClick={() => deleteComment(comment._id)}
+                        style={{
+                          cursor: 'pointer', float: 'right', width: '16px', height: '16px', marginLeft: 'auto', marginTop: '10px',
+                        }}
+                      >
+                        <AiOutlineDelete />
+                      </div>
+                    )
                   }
                 </div>
                 <div
@@ -110,7 +112,7 @@ const CommentsView = props => {
               placeholder="Your Reply"
               value={commentInput}
               onChange={e => setCommentInput(e.target.value)}
-              style={{ flexGrow: '1', minHeight: '60px' }}
+              style={{ flexGrow: 1, minHeight: '60px' }}
             />
           </div>
           <div className="form-group-submit" style={{ width: '100%' }}>
